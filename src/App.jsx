@@ -36,24 +36,13 @@ const Forecast = ({ periods }) => (
 const Page = () => {
     const [lat, setLat] = useState("42.365250");
     const [long, setLong] = useState("-71.105011");
-    const [forecast, setForecast] = useState();
-    const [hourlyForecast, setHourlyForecast] = useState();
 
-    const getWeather = async () => {
+    const getWeather = () => {
+      //Create a click handler to first get endpoints from the POINTS_URL
+      //Use the returned endpoints for forecast and forecastHourly to get the weather
+      //display the hourly and current forcast via the provided Forecast component
+      //cleanup the app however you see fit
         const POINTS_URL = `https://api.weather.gov/points/${lat},${long}`
-        const response = await fetch(POINTS_URL);
-        const data = await response.json();
-        const { forecast, forecastHourly } = data.properties;
-
-        await getForecast(forecast, setForecast);
-        await getForecast(forecastHourly, setHourlyForecast);
-    };
-
-    const getForecast = async (forecastURL, stateCallback) => {
-        const response = await fetch(forecastURL);
-        const json = await response.json();
-
-        stateCallback(json.properties);
     };
 
     return (
@@ -72,7 +61,7 @@ const Page = () => {
             </div>
             <div className="weather">
                 <h2>Today's Forecast</h2>
-                <Forecast periods={forecast?.periods} />
+                <Forecast />
 
                 <h2>Hourly Forecast</h2>
                 <Forecast />
